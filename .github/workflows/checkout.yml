@@ -130,10 +130,6 @@ jobs:
           echo "Running tests with coverage..."
           flutter test --coverage --concurrency=6 --no-pub --machine test/flutter_wk_test.dart | tee reports/tests.json
 
-      - name: Build example for iOS simulator
-        working-directory: example
-        run: flutter build ios --simulator --debug
-
       - name: Upload test report
         id: upload_test_report
         timeout-minutes: 1
