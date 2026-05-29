@@ -27,7 +27,7 @@
 - [Contributing](CONTRIBUTING.md)
 - [License](#license-)
 
-## Introduction 👨‍🏫
+## Description
 
 This library allows you to call essential methods from the iOS "WidgetKit Framework", which are needed when developing a widget. For example updating the widget timelines. It is also possible to communicate with the widget via <a href="https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_security_application-groups">App Groups</a>/<a href="https://developer.apple.com/documentation/foundation/userdefaults">UserDefaults</a>.
 
