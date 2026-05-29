@@ -1,0 +1,157 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dart:pub:get",
+      "type": "shell",
+      "command": [
+        "flutter pub get"
+      ],
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "dart:format",
+      "type": "shell",
+      "command": [
+        "dart format --fix -l 80"
+      ],
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "dart:build_runner:dir",
+      "type": "shell",
+      "command": [
+        "dart run build_runner build --build-filter '${fileDirname}/*.dart'"
+      ],
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "dependsOn": [
+        "dart:pub:get"
+      ]
+    },{
+      "label": "example:dart:build_runner:dir",
+      "type": "shell",
+      "command": [
+        "dart run build_runner build --build-filter '${fileDirname}/*.dart'",
+        "&& dart format --fix -l 80 '${fileDirname}'"
+      ],
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "dependsOn": [
+        "dart:pub:get"
+      ]
+    },
+    {
+      "label": "clear:example:build",
+      "type": "shell",
+      "command": "make clear-client",
+      "windows": {
+        "command": "powershell.exe",
+        "args": [
+          "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
+          "-Command",
+          "Remove-Item -Path '${workspaceFolder}\\example\\build' -Recurse -Force -ErrorAction Ignore"
+        ]
+      },
+      "linux": {
+        "command": "rm -rf",
+        "args": [
+          "${workspaceFolder}/example/build"
+        ]
+      },
+      "osx": {
+        "command": "rm -rf",
+        "args": [
+          "${workspaceFolder}/example/build"
+        ]
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "dart:build_runner:test_dir",
+      "type": "shell",
+      "command": [
+        "dart run build_runner build --build-filter 'test/**'"
+      ],
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "dependsOn": [
+        "dart:pub:get"
+      ]
+    },
+    {
+      "label": "init:ios:pods",
+      "type": "shell",
+      "command": [
+        "fvm flutter config --no-enable-swift-package-manager && flutter config --no-enable-swift-package-manager",
+        "&& cd example",
+        "&& fvm flutter clean",
+        "&& fvm flutter pub get",
+        "&& cd ios",
+        "&& ( [ -f \"_Podfile\" ] && [ ! -f \"Podfile\" ] && mv \"_Podfile\" \"Podfile\" || true )",
+        "&& rm -rf Pods Podfile.lock",
+        "&& pod install",
+        "&& cd .. && fvm flutter pub get || (echo \"¯\\\\_(ツ)_/¯ Init ios pods error\"; exit 1)"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "init:ios:spm",
+      "type": "shell",
+      "command": [
+        "fvm flutter config --enable-swift-package-manager && flutter config --enable-swift-package-manager",
+        "&& cd example",
+        "&& fvm flutter clean",
+        "&& cd ios",
+        "&& ( [ -f \"Podfile\" ] && mv \"Podfile\" \"_Podfile\" || true )",
+        "&& rm -rf Pods Podfile.lock",
+        "&& ( pod deintegrate || true )",
+        "&& cd .. && fvm flutter pub get || (echo \"¯\\\\_(ツ)_/¯ Init ios swift package manager error\"; exit 1)"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    }
+  ]
+}

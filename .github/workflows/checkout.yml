@@ -1,0 +1,169 @@
+name: Checkout
+
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+      - "master"
+      #- "dev"
+      #- "develop"
+      #- "feature/**"
+      #- "bugfix/**"
+      #- "hotfix/**"
+      #- "support/**"
+    paths:
+      - "lib/**.dart"
+      - "test/**.dart"
+      - "example/**.dart"
+      - .github/workflows/*.yml
+      - "pubspec.yaml"
+      - "example/pubspec.yaml"
+  pull_request:
+    branches:
+      - "main"
+      - "master"
+      - "dev"
+      - "develop"
+      - "feature/**"
+      - "bugfix/**"
+      - "hotfix/**"
+      - "support/**"
+    paths:
+      - "lib/**.dart"
+      - "test/**.dart"
+      - "example/**.dart"
+      - .github/workflows/*.yml
+      - "pubspec.yaml"
+      - "example/pubspec.yaml"
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+
+jobs:
+  checkout:
+    name: Checkout
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    env:
+      pub-cache-name: pub
+      threshold: 50
+    timeout-minutes: 15
+    concurrency:
+      group: checkout-${{ github.workflow }}-${{ github.ref_name }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout repository
+        id: checkout_repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            pubspec.yaml
+            lib
+            test
+            example
+            analysis_options.yaml
+            CHANGELOG.md
+
+      - name: Check content
+        id: check_content
+        timeout-minutes: 1
+        uses: andstor/file-existence-action@v2
+        with:
+          files: "README.md, CHANGELOG.md, CONTRIBUTING.md, LICENSE, example"
+
+      - name: Check README.md
+        if: steps.check_content.outputs.files_exists == 'true'
+        id: check_md_files
+        timeout-minutes: 1
+        run: |
+          echo | grep -q Description README.md ; echo Description is exist
+          echo | grep -q Example README.md ; echo Example is exist
+
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
+        id: install_flutter
+        with:
+          channel: 'stable'
+
+      - name: Check flutter version
+        id: check_flutter_version
+        timeout-minutes: 1
+        run: flutter --version
+
+      - name: Install dependencies
+        id: install_dependencies
+        timeout-minutes: 2
+        run: |
+          apt-get update && apt-get install -y lcov
+          flutter pub get --no-example
+
+      - name: Run dependency validator
+        timeout-minutes: 1
+        run: |
+          dart pub global activate dependency_validator
+          dart pub global run dependency_validator:dependency_validator
+
+      - name: Check format
+        id: check_format
+        timeout-minutes: 1
+        run: dart format --set-exit-if-changed -l 80 -o none lib/
+
+      - name: Check analyzer
+        id: check_analyzer
+        timeout-minutes: 1
+        run: flutter analyze --fatal-warnings --no-fatal-infos lib/ test/
+
+      - name: Run tests
+        id: run_tests
+        timeout-minutes: 2
+        run: |
+          echo "Creating reports directory..."
+          mkdir -p reports
+          echo "Running tests with coverage..."
+          flutter test --coverage --concurrency=6 --no-pub --machine test/flutter_wk_test.dart | tee reports/tests.json
+
+      - name: Build example for iOS simulator
+        working-directory: example
+        run: flutter build ios --simulator --debug
+
+      - name: Upload test report
+        id: upload_test_report
+        timeout-minutes: 1
+        uses: actions/upload-artifact@v4
+        if: ${{ (success() || failure()) && github.actor != 'dependabot[bot]' }}
+        with:
+          name: test-results
+          path: reports/tests.json
+
+      - name: Cat results
+        id: cat_results
+        timeout-minutes: 1
+        run: cat reports/tests.json
+
+      - name: Test report
+        id: test_report
+        timeout-minutes: 1
+        uses: dorny/test-reporter@v2
+        if: ${{ !cancelled() }}
+        with:
+          artifact: test-results
+          name: Test report
+          path: "**/tests.json"
+          reporter: flutter-json
+          fail-on-error: false
+
+      - name: Upload coverage to codecov
+        id: upload_coverage
+        timeout-minutes: 1
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
