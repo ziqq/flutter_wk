@@ -1,11 +1,9 @@
 # Changelog
 
-## Unreleased
-- **CHANGED**: Renamed the public Dart API and channel method strings to `reload`, `reloadOfKind`, `read`, `write`, and `remove`.
 
-## 0.0.1-pre.1
-- **ADDED**: WidgetKit.setItem(String key, dynamic value, String appGroup)
-- **ADDED**: WidgetKit.removeItem(String key, String appGroup)
-- **ADDED**: WidgetKit.getItem(String key, String appGroup)
-- **ADDED**: WidgetKit.reloadTimelines(ofKind: String)
-- **ADDED**: WidgetKit.reloadAllTimelines()
+## 0.0.1-pre.2
+- **ADDED**: WidgetKit.write(String key, dynamic value, String appGroup)
+- **ADDED**: WidgetKit.remove(String key, String appGroup)
+- **ADDED**: WidgetKit.read(String key, String appGroup)
+- **ADDED**: WidgetKit.reloadOfKind(ofKind: String)
+- **ADDED**: WidgetKit.reload()
