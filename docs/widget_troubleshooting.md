@@ -83,7 +83,7 @@ If the widget expects JSON, make sure it decodes the stored string or object in 
 If the widget builds but does not refresh:
 
 - call `WidgetKit.reloadAllTimelines()` after writing data
-- or call `WidgetKit.reloadTimelines(ofKind)` with the correct widget kind
+- or call `WidgetKit.reloadTimelines('YourWidgetKind')` with the correct widget kind
 - make sure the widget kind matches the one registered by the widget extension
 
 ## 7. Clean and rebuild

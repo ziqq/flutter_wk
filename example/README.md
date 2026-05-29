@@ -1,16 +1,38 @@
 # flutter_wk_example
 
-Demonstrates how to use the flutter_wk plugin.
+This example demonstrates the intended `flutter_wk` integration flow:
 
-## Getting Started
+- Flutter writes widget data into shared App Group storage.
+- Flutter triggers WidgetKit timeline reloads.
+- The native SwiftUI widget extension reads the same shared data and renders it.
 
-This project is a starting point for a Flutter application.
+## What the example includes
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter app UI in `lib/main.dart`
+- Example payload model in `lib/flutter_widget_data.dart`
+- Native widget extension in `ios/FlutterWidget/FlutterWidget.swift`
+- Widget interaction tests in `test/widget_test.dart`
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Example contract
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The example app and widget extension share these values:
+
+- App Group: `group.com.ziqq`
+- Storage key: `widgetData`
+- Widget kind: `FlutterWidget`
+
+If you adapt this example for your own app, update all three places together.
+
+## Running the example
+
+1. Open `ios/Runner.xcworkspace` in Xcode.
+2. Make sure the Runner target and widget extension use the same App Group.
+3. Run the Flutter app.
+4. Add the widget to the iOS home screen.
+5. Update or remove widget data from the Flutter UI.
+
+## Notes
+
+- The widget UI is implemented natively in SwiftUI.
+- `flutter_wk` only provides the bridge for storage and timeline reloads.
+- If the widget does not appear or does not refresh, see `../docs/widget_setup.md` and `../docs/widget_troubleshooting.md`.

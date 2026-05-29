@@ -18,11 +18,10 @@
 
 ## Table of Contents 📚
 
-- [Introduction](#introduction-)
+- [Description](#description-)
 - [Installation](#installation-)
-- [Usage](#usage-)
+- [Example](#example-)
 - [Documentation](#documentation)
-- [Roadmap](docs/roadmap.md)
 - [Methods](#methods-)
 - [Contributing](CONTRIBUTING.md)
 - [License](#license-)
