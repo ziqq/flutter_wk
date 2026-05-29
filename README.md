@@ -41,7 +41,7 @@ Add flutter_wk as a <a href="https://flutter.dev/docs/development/packages-and-p
 
 Then run `flutter pub get`.
 
-## Usage
+## Example
 
 ```dart
 import 'package:flutter_wk/flutter_wk.dart';
