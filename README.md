@@ -1,30 +1,16 @@
-<h1 align="center">flutter_wk</h1>
+<!-- <h1 align="center">flutter_wk</h1>
 
 <p align="center">
     <img alt="flutter" src="./.github/assets/flutter.png" width="96">
     <img alt="widgetkit" src="./.github/assets/widgetkit.png" width="96">
-</p>
+</p> -->
 
-<div align="center">
-  <strong><a href="https://flutter.dev/">Flutter</a> Library for the iOS 🍏 <a href="https://developer.apple.com/documentation/widgetkit/">WidgetKit framework</a> and Widget Communication</strong>
+# flutter_wk
+
+<div>
+  <strong><a href="https://flutter.dev/">Flutter</a> Library for the iOS <a href="https://developer.apple.com/documentation/widgetkit/">WidgetKit framework</a> and Widget Communication</strong>
 </div>
-<br>
-<div align="center">
-<img alt="widget_small"  src="./.github/assets/focused-small.png" width="96">
-<img alt="widget_medium"  src="./.github/assets/weather-medium.png" width="200">
-<img alt="widget_small"  src="./.github/assets/notes-small.png" width="96">
-</div>
-<br>
 
-## Table of Contents 📚
-
-- [Description](#description-)
-- [Installation](#installation-)
-- [Example](#example-)
-- [Documentation](#documentation)
-- [Methods](#methods-)
-- [Contributing](CONTRIBUTING.md)
-- [License](#license-)
 
 ## Description
 
@@ -32,13 +18,13 @@ This library allows you to call essential methods from the iOS "WidgetKit Framew
 
 To be on the safe side: This library exposes API functionality of <a href="https://developer.apple.com/documentation/widgetkit/">WidgetKit</a>. The widgets themselves must be developed natively in SwiftUI.
 
-### <strong><a href="https://thomas-leiter.medium.com/develop-an-ios-14-widget-in-flutter-with-swiftui-e98eaff2c606">Blog</a> about writing a Widget with this library</strong>
 
 ## Installation
 
 Add flutter_wk as a <a href="https://flutter.dev/docs/development/packages-and-plugins/using-packages">dependency in your pubspec.yaml</a> file.
 
 Then run `flutter pub get`.
+
 
 ## Example
 
