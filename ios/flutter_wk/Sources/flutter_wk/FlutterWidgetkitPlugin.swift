@@ -53,7 +53,7 @@ public class FlutterWidgetkitPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    if call.method == "reloadAllTimelines" {
+    if call.method == "reload" {
       if #available(iOS 14.0, *) {
         #if arch(arm64) || arch(i386) || arch(x86_64)
           WidgetCenter.shared.reloadAllTimelines()
@@ -61,7 +61,7 @@ public class FlutterWidgetkitPlugin: NSObject, FlutterPlugin {
       }
       result(nil)
       return
-    } else if call.method == "reloadTimelines" {
+    } else if call.method == "reloadOfKind" {
       if #available(iOS 14.0, *) {
         if let args = call.arguments as? [String: Any],
           let ofKind = args["ofKind"] as? String
@@ -74,7 +74,7 @@ public class FlutterWidgetkitPlugin: NSObject, FlutterPlugin {
 
       result(nil)
       return
-    } else if call.method == "getItem" {
+    } else if call.method == "read" {
       if let args = call.arguments as? [String: Any],
         let appGroup = args["appGroup"] as? String,
         let key = args["key"] as? String
@@ -91,7 +91,7 @@ public class FlutterWidgetkitPlugin: NSObject, FlutterPlugin {
 
       result(nil)
       return
-    } else if call.method == "setItem" {
+    } else if call.method == "write" {
       if let args = call.arguments as? [String: Any],
         let appGroup = args["appGroup"] as? String,
         let key = args["key"] as? String,
@@ -109,7 +109,7 @@ public class FlutterWidgetkitPlugin: NSObject, FlutterPlugin {
 
       result(nil)
       return
-    } else if call.method == "removeItem" {
+    } else if call.method == "remove" {
       if let args = call.arguments as? [String: Any],
         let appGroup = args["appGroup"] as? String,
         let key = args["key"] as? String

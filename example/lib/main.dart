@@ -50,13 +50,13 @@ class __HomeState extends State<_Home> {
 
   Future<void> _onUpdate() async {
     final data = jsonEncode(FlutterWidgetData(_textController.text));
-    await WidgetKit.setItem<String>(App.ofKind, data, App.appGroup);
-    await WidgetKit.reloadAllTimelines();
+    await WidgetKit.write<String>(App.ofKind, data, App.appGroup);
+    await WidgetKit.reload();
   }
 
   Future<void> _onRemove() async {
-    await WidgetKit.removeItem(App.ofKind, App.appGroup);
-    await WidgetKit.reloadAllTimelines();
+    await WidgetKit.remove(App.ofKind, App.appGroup);
+    await WidgetKit.reloadOfKind(App.ofKind);
   }
 
   @override

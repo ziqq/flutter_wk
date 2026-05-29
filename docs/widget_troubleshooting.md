@@ -33,7 +33,7 @@ Check all of these places:
 
 - Runner target Signing & Capabilities
 - Widget extension target Signing & Capabilities
-- Flutter code calling `WidgetKit.setItem` and `WidgetKit.getItem`
+- Flutter code calling `WidgetKit.write` and `WidgetKit.read`
 - Swift widget code calling `UserDefaults(suiteName: ...)`
 
 For the example app, the App Group is `group.com.ziqq`.
@@ -63,8 +63,8 @@ Check that Flutter writes:
 Typical example:
 
 ```dart
-await WidgetKit.setItem<String>('widgetData', '{"text":"Hello Widget"}', appGroup);
-await WidgetKit.reloadAllTimelines();
+await WidgetKit.write<String>('widgetData', '{"text":"Hello Widget"}', appGroup);
+await WidgetKit.reload();
 ```
 
 ## 5. Verify the widget reads the same key
@@ -82,8 +82,8 @@ If the widget expects JSON, make sure it decodes the stored string or object in 
 
 If the widget builds but does not refresh:
 
-- call `WidgetKit.reloadAllTimelines()` after writing data
-- or call `WidgetKit.reloadTimelines('YourWidgetKind')` with the correct widget kind
+- call `WidgetKit.reload()` after writing data
+- or call `WidgetKit.reloadOfKind('YourWidgetKind')` with the correct widget kind
 - make sure the widget kind matches the one registered by the widget extension
 
 ## 7. Clean and rebuild

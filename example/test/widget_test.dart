@@ -17,7 +17,7 @@ void main() {
         .setMockMethodCallHandler(channel, (call) async {
           calls.add(call);
           switch (call.method) {
-            case 'removeItem':
+            case 'remove':
               return true;
             default:
               return null;
@@ -42,13 +42,13 @@ void main() {
       await tester.pump();
 
       expect(calls, hasLength(2));
-      expect(calls[0].method, 'setItem');
+      expect(calls[0].method, 'write');
       expect(calls[0].arguments, <String, Object?>{
         'key': 'widgetData',
         'value': jsonEncode(const {'text': 'Hello Widget'}),
         'appGroup': 'group.com.ziqq',
       });
-      expect(calls[1].method, 'reloadAllTimelines');
+      expect(calls[1].method, 'reload');
     });
 
     testWidgets('removes widget data and reloads timelines', (tester) async {
@@ -58,12 +58,13 @@ void main() {
       await tester.pump();
 
       expect(calls, hasLength(2));
-      expect(calls[0].method, 'removeItem');
+      expect(calls[0].method, 'remove');
       expect(calls[0].arguments, <String, Object?>{
         'key': 'widgetData',
         'appGroup': 'group.com.ziqq',
       });
-      expect(calls[1].method, 'reloadAllTimelines');
+      expect(calls[1].method, 'reloadOfKind');
+      expect(calls[1].arguments, <String, Object?>{'ofKind': 'widgetData'});
     });
   });
 }

@@ -8,21 +8,21 @@ class FlutterWidgetData {
   /// {@macro flutter_widget_data}
   const FlutterWidgetData(this.text);
 
-  /// The text to be displayed in the widget.
-  final String text;
-
   /// Creates a [FlutterWidgetData] instance from a JSON map.
   factory FlutterWidgetData.fromJson(Map<String, Object?> json) {
     if (json.isEmpty) throw ArgumentError('JSON is empty');
     if (json case <String, Object?>{'text': String text}) {
       return FlutterWidgetData(text);
     } else {
-      throw FormatException(
+      throw const FormatException(
         'Invalid JSON format: '
         'expected a map with a "text" key of type String',
       );
     }
   }
+
+  /// The text to be displayed in the widget.
+  final String text;
 
   Map<String, Object?> toJson() => {'text': text};
 

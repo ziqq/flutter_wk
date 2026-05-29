@@ -48,13 +48,13 @@ import 'package:flutter_wk/flutter_wk.dart';
 const appGroup = 'group.com.example.widget';
 
 // Reload widget timelines.
-await WidgetKit.reloadAllTimelines();
-await WidgetKit.reloadTimelines('example_widget');
+await WidgetKit.reload();
+await WidgetKit.reloadOfKind('example_widget');
 
 // Communicate with the widget through an App Group.
-await WidgetKit.setItem<String>('testString', 'Hello World', appGroup);
-final value = await WidgetKit.getItem<String>('testString', appGroup);
-await WidgetKit.removeItem('testString', appGroup);
+await WidgetKit.write<String>('testString', 'Hello World', appGroup);
+final value = await WidgetKit.read<String>('testString', appGroup);
+await WidgetKit.remove('testString', appGroup);
 ```
 
 ### iOS setup notes
@@ -66,7 +66,7 @@ await WidgetKit.removeItem('testString', appGroup);
 
 ### Error handling
 
-- `WidgetKit.getItem`, `WidgetKit.setItem`, and `WidgetKit.removeItem` throw a `PlatformException` with code `missing_app_group` when `appGroup` is empty.
+- `WidgetKit.read`, `WidgetKit.write`, and `WidgetKit.remove` throw a `PlatformException` with code `missing_app_group` when `appGroup` is empty.
 - The same methods throw a `PlatformException` with code `invalid_app_group` when the provided App Group is not configured for the app.
 - A missing key still returns `null`; only App Group configuration problems are surfaced as errors.
 
@@ -80,42 +80,51 @@ await WidgetKit.removeItem('testString', appGroup);
 
 ## Methods
 
-#### `Future<void> WidgetKit.reloadAllTimelines()`
+#### `Future<void> WidgetKit.reload()`
 
 Reloads the timelines for all configured widgets belonging to the containing app.
 
----
-
-#### `Future<void> WidgetKit.reloadTimelines(String ofKind)`
+#### `Future<void> WidgetKit.reloadOfKind(String kind)`
 
 Reloads the timelines for all widgets of a particular kind.
 
----
-
-#### `Future<T?> WidgetKit.setItem<T>(String key, Object? value, String appGroup)`
+#### `Future<T?> WidgetKit.write<T>(String key, Object? value, String appGroup)`
 
 Writes Key-Value to <a href="https://developer.apple.com/documentation/foundation/userdefaults">UserDefaults</a> database.
 
 Throws a `PlatformException` if the App Group is empty or invalid.
 
----
-
-#### `Future<T?> WidgetKit.getItem<T>(String key, String appGroup)`
+#### `Future<T?> WidgetKit.read<T>(String key, String appGroup)`
 
 Reads Value from <a href="https://developer.apple.com/documentation/foundation/userdefaults">UserDefaults</a> database.
 
 Throws a `PlatformException` if the App Group is empty or invalid.
 
----
-
-#### `Future<bool> WidgetKit.removeItem(String key, String appGroup)`
+#### `Future<bool> WidgetKit.remove(String key, String appGroup)`
 
 Removes Value for Key from <a href="https://developer.apple.com/documentation/foundation/userdefaults">UserDefaults</a> database.
 
 Throws a `PlatformException` if the App Group is empty or invalid.
 
----
+
+## Changelog
+Refer to the [Changelog](https://github.com/ziqq/flutter_wk/blob/main/CHANGELOG.md) to get all release notes.
+
+
+## Maintainers
+[Anton Ustinoff (ziqq)](https://github.com/ziqq)
+
 
 ## License
+[MIT](https://github.com/ziqq/flutter_wk/blob/main/LICENSE)
 
-[MIT License](LICENSE)
+
+## Funding
+If you want to support the development of our library, there are several ways you can do it:
+
+- [Buy me a coffee](https://www.buymeacoffee.com/ziqq)
+- [Subscribe through Boosty](https://boosty.to/ziqq)
+
+
+## Coverage
+<img  src="https://codecov.io/gh/ziqq/flutter_wk/graphs/sunburst.svg?token=SIXKP5EDZK"  width="375">

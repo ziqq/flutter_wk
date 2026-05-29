@@ -31,11 +31,11 @@ The public Dart API lives in `lib/flutter_wk.dart`.
 
 It exposes only five operations:
 
-- `reloadAllTimelines()`
-- `reloadTimelines(String ofKind)`
-- `getItem<T>(String key, String appGroup)`
-- `setItem<T>(String key, Object? value, String appGroup)`
-- `removeItem(String key, String appGroup)`
+- `reload()`
+- `reloadOfKind(String kind)`
+- `read<T>(String key, String appGroup)`
+- `write<T>(String key, Object? value, String appGroup)`
+- `remove(String key, String appGroup)`
 
 This layer is intentionally narrow.
 

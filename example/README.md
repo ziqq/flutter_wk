@@ -36,3 +36,10 @@ If you adapt this example for your own app, update all three places together.
 - The widget UI is implemented natively in SwiftUI.
 - `flutter_wk` only provides the bridge for storage and timeline reloads.
 - If the widget does not appear or does not refresh, see `../docs/widget_setup.md` and `../docs/widget_troubleshooting.md`.
+
+## Flutter API used in the example
+
+- `WidgetKit.write`
+- `WidgetKit.remove`
+- `WidgetKit.reload`
+- `WidgetKit.reloadOfKind`

@@ -85,8 +85,8 @@ On the Flutter side, write data to the same App Group that the widget extension 
 const appGroup = 'group.com.example.widget';
 const key = 'widgetData';
 
-await WidgetKit.setItem<String>(key, '{"text":"Hello Widget"}', appGroup);
-await WidgetKit.reloadAllTimelines();
+await WidgetKit.write<String>(key, '{"text":"Hello Widget"}', appGroup);
+await WidgetKit.reload();
 ```
 
 The example app uses:
@@ -104,8 +104,8 @@ The example app uses:
 
 ## Data flow to verify
 
-1. Flutter writes a value with `WidgetKit.setItem`.
-2. Flutter calls `WidgetKit.reloadAllTimelines()` or `WidgetKit.reloadTimelines(...)`.
+1. Flutter writes a value with `WidgetKit.write`.
+2. Flutter calls `WidgetKit.reload()` or `WidgetKit.reloadOfKind(...)`.
 3. The widget extension reads from `UserDefaults(suiteName: appGroup)`.
 4. The widget decodes the stored value and renders it.
 
