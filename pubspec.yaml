@@ -1,0 +1,38 @@
+name: flutter_wk
+description: Flutter library for iOS Widgets Extensions. Integrate a Widget into your App.
+version: 0.0.1
+
+homepage: https://github.com/ziqq/flutter_wk
+repository: https://github.com/ziqq/flutter_wk
+issue_tracker: https://github.com/ziqq/flutter_wk/issues
+
+funding:
+  - https://www.buymeacoffee.com/ziqq
+  - https://boosty.to/ziqq
+
+platforms:
+  # android:
+  ios:
+
+environment:
+  sdk: '>=3.11.0 <4.0.0'
+  flutter: ">=3.41.0"
+
+dependencies:
+  # Flutter SDK
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  # Integration tests for Flutter
+  integration_test:
+    sdk: flutter
+  # Unit & Widget tests for Flutter
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      ios:
+        pluginClass: FlutterWidgetkitPlugin
